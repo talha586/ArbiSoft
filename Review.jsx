@@ -2,9 +2,7 @@
 const Review = () => {
     return(
         <>
-            <form>
-                
-            </form>
+            <h1></h1>
         </>
     )    
 }

@@ -1,31 +1,39 @@
+import { Link } from 'react-router-dom'
+
 const Home = () => {
     return(
         <div className="Home-Container">
             <div>
                 <h1 className="Title-Container">GameFlix</h1>
             </div>
-
-            <div className="Trending-Div">
-                <div>
-                    <h2 className="Card-Title">Trending</h2>
-                    <p className="Card-Subtitle">Popular games right now</p>
+            <Link to="/Trending" style={{textDecoration:'none'}}>
+                <div className="Trending-Div">
+                    <div>
+                        <h2 className="Card-Title">Trending</h2>
+                        <p className="Card-Subtitle">Popular games right now</p>
+                    </div>
                 </div>
-            </div>
+            </Link>
 
-            <div className="Playlist-Div">
-                <div>
-                    <h2 className="Card-Title">Playlist</h2>
-                    <p className="Card-Subtitle">Your favorite game picks</p>
+            <Link to = '/Playlist' style={{textDecoration:"none"}}>
+                <div className="Playlist-Div">
+                    <div>
+                        <h2 className="Card-Title">Playlist</h2>
+                        <p className="Card-Subtitle">Your favorite game picks</p>
+                    </div>
                 </div>
-            </div>
+            </Link>
 
-            <div className="Review-Div">
-                <div>
-                    <h2 className="Card-Title">Review</h2>
-                    <p className="Card-Subtitle">See game feedback and ratings</p>
+            <Link to = '/Review' style={{textDecoration:'none'}}>
+                <div className="Review-Div">
+                    <div>
+                        <h2 className="Card-Title">Review</h2>
+                        <p className="Card-Subtitle">See game feedback and ratings</p>
+                    </div>
                 </div>
-            </div>
+            </Link>
         </div>
+
     )
 }
 
