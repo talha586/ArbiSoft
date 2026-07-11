@@ -122,3 +122,68 @@ body {
   
 }
 
+/* Playlist Dropdown Styles */
+.Playlist-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.Playlist-Controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Genre-Label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #E04B6D;
+  letter-spacing: 0.5px;
+}
+
+.Genre-Select {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid #E04B6D;
+  background-color: rgba(30, 30, 30, 0.9);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  box-shadow: 0 2px 10px rgba(224, 75, 109, 0.2);
+}
+
+.Genre-Select:hover {
+  border-color: #ff6b8a;
+  box-shadow: 0 4px 15px rgba(224, 75, 109, 0.4);
+  background-color: rgba(40, 40, 40, 0.95);
+}
+
+.Genre-Select:focus {
+  outline: none;
+  border-color: #ff6b8a;
+  box-shadow: 0 0 0 3px rgba(224, 75, 109, 0.2);
+}
+
+.Genre-Select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 8px;
+  border: none;
+}
+
+.Genre-Select option:hover {
+  background-color: #E04B6D;
+}
+

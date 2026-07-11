@@ -1,9 +1,11 @@
 
 const Review = () => {
     return(
-        <>
-            <h1></h1>
-        </>
+        <div>
+            <div>
+                <h1 className = 'Title-Container'>Submit Review</h1>
+            </div>
+        </div>
     )    
 }
 

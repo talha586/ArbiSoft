@@ -1,3 +1,4 @@
+
 const GamesDetails = ({ games }) => {
     if (!Array.isArray(games) || games.length === 0) return null;
 

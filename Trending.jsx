@@ -2,25 +2,26 @@ import { useState, useEffect } from 'react'
 import GamesDetails from './GamesDetails'
 
 const Trending = () => {
+    const url = 'https://www.freetogame.com/api/games';
     const [games, setGames] = useState(null);
     const [isPending, setIsPending] = useState(true);
-
+    
     useEffect(() => {
-        fetch('https://www.freetogame.com/api/games')
-            .then(res => {
-                if (!res.ok) {
-                    throw Error('There is an Error in response');
-                }
-                return res.json();
-            })
-            .then(data => {
-                setGames(data);
-                setIsPending(false);
-            })
-            .catch(err => {
-                console.error(err);
-                setIsPending(false);
-            })
+        fetch(url)
+        .then(res => {
+            if (!res.ok) {
+                 throw Error('There is an Error in response');
+            }
+            return res.json();
+        })
+        .then(data => {
+            setGames(data);
+            setIsPending(false);
+        })
+        .catch(err => {
+            console.error(err);
+            setIsPending(false);
+        })
     }, [])
 
     return (
