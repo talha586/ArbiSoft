@@ -5,13 +5,13 @@ import GamesDetails from "../services/GamesDetails";
 
 const mockGames = [
   {
-    id: 1,
+    id: 01,
     title: "Warframe",
     short_description: "A cooperative free-to-play third person shooter.",
     thumbnail: "https://example.com/warframe.jpg",
   },
   {
-    id: 2,
+    id: 02,
     title: "Smite",
     short_description: "A third-person MOBA featuring mythological gods.",
     thumbnail: "https://example.com/smite.jpg",
