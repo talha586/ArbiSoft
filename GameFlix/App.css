@@ -1,0 +1,287 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #111111, #1f1f1f);
+  color: #fff;
+}
+
+.Title-Container {
+  font-size: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  margin-top: 25px;
+  color: #e04b6d;
+  letter-spacing: 1px;
+}
+
+.Home-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 20px 60px;
+}
+
+.Trending-Div,
+.Playlist-Div,
+.Review-Div {
+  width: min(90vw, 520px);
+  height: 180px;
+  background: linear-gradient(135deg, #1d1d1d, #2a2a2a);
+  border-radius: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.Trending-Div:hover,
+.Playlist-Div:hover,
+.Review-Div:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+.Card-Title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Card-Subtitle {
+  font-size: 0.95rem;
+  color: #c7c7c7;
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Games-Container {
+  width: min(94vw, 1100px);
+  margin: 24px auto 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  padding: 0 12px;
+}
+
+.Game-Details {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.Game-Details img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.Game-Details h3 {
+  margin: 6px 0 0;
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+.Game-Details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #cfcfcf;
+  line-height: 1.2rem;
+}
+
+.Loading-Text,
+.Empty-Text {
+  color: #bdbdbd;
+  text-align: center;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* Playlist Dropdown Styles */
+.Playlist-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.Playlist-Controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Genre-Label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e04b6d;
+  letter-spacing: 0.5px;
+}
+
+.Genre-Select {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid #e04b6d;
+  background-color: rgba(30, 30, 30, 0.9);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  box-shadow: 0 2px 10px rgba(224, 75, 109, 0.2);
+}
+
+.Genre-Select:hover {
+  border-color: #ff6b8a;
+  box-shadow: 0 4px 15px rgba(224, 75, 109, 0.4);
+  background-color: rgba(40, 40, 40, 0.95);
+}
+
+.Genre-Select:focus {
+  outline: none;
+  border-color: #ff6b8a;
+  box-shadow: 0 0 0 3px rgba(224, 75, 109, 0.2);
+}
+
+.Genre-Select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 8px;
+  border: none;
+}
+
+.Genre-Select option:hover {
+  background-color: #e04b6d;
+}
+
+/* Review Form Styles */
+.Review-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.Review-Controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(90vw, 520px);
+  padding: 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.Review-Label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e04b6d;
+  letter-spacing: 0.5px;
+}
+
+.Review-Select,
+.Review-Input,
+.Review-Textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 2px solid #e04b6d;
+  background-color: rgba(30, 30, 30, 0.95);
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.Review-Select:hover,
+.Review-Input:hover,
+.Review-Textarea:hover {
+  border-color: #ff6b8a;
+  box-shadow: 0 4px 15px rgba(224, 75, 109, 0.25);
+  background-color: rgba(40, 40, 40, 0.95);
+}
+
+.Review-Select:focus,
+.Review-Input:focus,
+.Review-Textarea:focus {
+  outline: none;
+  border-color: #ff6b8a;
+  box-shadow: 0 0 0 3px rgba(224, 75, 109, 0.2);
+}
+
+.Review-Select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.Review-Button {
+  width: fit-content;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #e04b6d, #ff6b8a);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.Review-Button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(224, 75, 109, 0.3);
+}
+
+.Review-Button:active {
+  transform: translateY(0);
+}
