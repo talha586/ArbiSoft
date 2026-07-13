@@ -61,7 +61,7 @@ const Review = () => {
           onChange={handleChange}
           className="Review-Select"
         >
-          <option value="">-- Select Game --</option>
+          <option value=""> Select Game </option>
           {games.map((game) => (
             <option key={game.id} value={game.title}>
               {game.title}
