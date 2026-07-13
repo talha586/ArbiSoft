@@ -99,7 +99,7 @@ const Review = () => {
           Submit Review
         </button>
 
-        {isPending && <p className="Empty-Text">Loading games...</p>}
+        {isPending && <p className="Empty-Text">Loading games.....</p>}
         {error && <p className="Empty-Text">{error}</p>}
       </form>
     </div>
