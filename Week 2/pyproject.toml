@@ -1,0 +1,26 @@
+[tool.ruff]
+# Target Python version
+target-version = "py311"
+# Set the maximum line length (Django default is often 79-88, 88 is standard for Black/Ruff)
+line-length = 88
+
+[tool.ruff.lint]
+# Enable specific linter rules
+# E/W = Pycodestyle, F = Pyflakes, I = Isort, DJ = Flake8-Django
+select = ["E", "W", "F", "I", "DJ"]
+
+# Rules to ignore (adjust based on your team's preferences)
+ignore = [
+    "E501", # Line too long (handled automatically by formatters)
+]
+
+[tool.ruff.lint.isort]
+# Ensure import groups are sorted cleanly
+known-first-party = ["your_django_project_name"]
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore unused imports in __init__.py files
+"__init__.py" = ["F401"]
+# Ignore security/style rules in Django settings or migrations if needed
+"**/settings.py" = ["E501"]
+"**/migrations/*.py" = ["E501"]
