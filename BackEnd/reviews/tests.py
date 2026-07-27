@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -97,8 +98,30 @@ def test_create_review_with_invalid_data(api_client, review_user):
     assert "review" in response.json()
                 
 
-def test_delete_review(api_client, review_user, review_instance):
+@pytest.mark.django_db
+def test_moderator_can_delete_review(api_client, review_user, review_instance):
+    moderator_group, _ = Group.objects.get_or_create(name="moderator")
+    moderator_user = get_user_model().objects.create_user(
+        username="moderator",
+        password="StrongPass123",
+    )
+    moderator_user.groups.add(moderator_group)
+    api_client.force_authenticate(user=moderator_user)
+
     response = api_client.delete(f"/api/reviews/{review_instance.id}/")
 
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert not Review.objects.filter(id=review_instance.id).exists()
+
+
+@pytest.mark.django_db
+def test_non_moderator_cannot_delete_review(api_client, review_user, review_instance):
+    regular_user = get_user_model().objects.create_user(
+        username="regular",
+        password="StrongPass123",
+    )
+    api_client.force_authenticate(user=regular_user)
+
+    response = api_client.delete(f"/api/reviews/{review_instance.id}/")
+
+    assert response.status_code == status.HTTP_403_FORBIDDEN
