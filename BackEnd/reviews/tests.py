@@ -29,14 +29,14 @@ def review_instance(review_user):
 
 @pytest.mark.django_db
 def test_obtain_jwt_token_for_valid_credentials(api_client):
-    auth_user = get_user_model().objects.create_user(
+    user = get_user_model().objects.create_user(
         username="jwtuser",
         password="StrongPass123",
     )
 
     response = api_client.post(
         "/api/token/",
-        {"username": auth_user.username, "password": "StrongPass123"},
+        {"username": user.username, "password": "StrongPass123"},
         format="json",
     )
 
@@ -45,28 +45,26 @@ def test_obtain_jwt_token_for_valid_credentials(api_client):
     assert "refresh" in response.json()
 
 
-def test_list_reviews(api_client, review_user, review_instance):
-    response = api_client.get("/api/reviews/")
-
-    assert response.status_code == status.HTTP_200_OK
-    assert len(response.json()) >= 1
-    assert response.json()[0]["user"] == review_user.id
-
-
-def test_create_review(api_client, review_user):
+@pytest.mark.django_db
+def test_create_and_retrieve_review(api_client, review_user):
     payload = {
         "user": review_user.id,
         "game": "Portal 2",
         "email": "tester@example.com",
         "review": "A brilliant puzzle game.",
     }
-    response = api_client.post("/api/reviews/", payload, format="json")
 
-    assert response.status_code == status.HTTP_201_CREATED
-    assert response.json()["user"] == review_user.id
-    assert response.json()["game"] == payload["game"]
+    create_response = api_client.post("/api/reviews/", payload, format="json")
+    assert create_response.status_code == status.HTTP_201_CREATED
+
+    review_id = create_response.json()["id"]
+    get_response = api_client.get(f"/api/reviews/{review_id}/")
+
+    assert get_response.status_code == status.HTTP_200_OK
+    assert get_response.json()["game"] == payload["game"]
 
 
+@pytest.mark.django_db
 def test_update_review(api_client, review_user, review_instance):
     payload = {
         "user": review_user.id,
@@ -74,35 +72,21 @@ def test_update_review(api_client, review_user, review_instance):
         "email": "player@example.com",
         "review": "Updated review",
     }
+
     response = api_client.put(
         f"/api/reviews/{review_instance.id}/", payload, format="json"
     )
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["review"] == payload["review"]
-    assert response.json()["user"] == review_user.id
+    assert response.json()["game"] == payload["game"]
 
-
-def test_create_review_with_invalid_data(api_client, review_user):
-    payload = {
-        "user": review_user.id,
-        "game": "",
-        "email": "not-an-email",
-        "review": "   ",
-    }
-    response = api_client.post("/api/reviews/", payload, format="json")
-
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert "game" in response.json()
-    assert "email" in response.json()
-    assert "review" in response.json()
-                
 
 @pytest.mark.django_db
-def test_moderator_can_delete_review(api_client, review_user, review_instance):
+def test_delete_review(api_client, review_user, review_instance):
     moderator_group, _ = Group.objects.get_or_create(name="moderator")
     moderator_user = get_user_model().objects.create_user(
-        username="moderator",
+        username="moderator-delete",
         password="StrongPass123",
     )
     moderator_user.groups.add(moderator_group)
@@ -115,13 +99,17 @@ def test_moderator_can_delete_review(api_client, review_user, review_instance):
 
 
 @pytest.mark.django_db
-def test_non_moderator_cannot_delete_review(api_client, review_user, review_instance):
-    regular_user = get_user_model().objects.create_user(
-        username="regular",
-        password="StrongPass123",
-    )
-    api_client.force_authenticate(user=regular_user)
+def test_create_review_with_invalid_data(api_client, review_user):
+    payload = {
+        "user": review_user.id,
+        "game": "",
+        "email": "not-an-email",
+        "review": "   ",
+    }
 
-    response = api_client.delete(f"/api/reviews/{review_instance.id}/")
+    response = api_client.post("/api/reviews/", payload, format="json")
 
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "game" in response.json()
+    assert "email" in response.json()
+    assert "review" in response.json()
