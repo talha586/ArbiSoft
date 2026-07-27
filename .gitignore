@@ -33,4 +33,5 @@ node_modules/
 dist/
 build/
 .pytest_cache/
-.ruff_cache/
+.ruff_cache/GameFlix/
+Week 2/

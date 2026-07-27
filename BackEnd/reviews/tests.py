@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -23,6 +24,24 @@ def review_instance(review_user):
         email="player@example.com",
         review="Great story and atmosphere.",
     )
+
+
+@pytest.mark.django_db
+def test_obtain_jwt_token_for_valid_credentials(api_client):
+    auth_user = get_user_model().objects.create_user(
+        username="jwtuser",
+        password="StrongPass123",
+    )
+
+    response = api_client.post(
+        "/api/token/",
+        {"username": auth_user.username, "password": "StrongPass123"},
+        format="json",
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    assert "access" in response.json()
+    assert "refresh" in response.json()
 
 
 def test_list_reviews(api_client, review_user, review_instance):
@@ -76,7 +95,7 @@ def test_create_review_with_invalid_data(api_client, review_user):
     assert "game" in response.json()
     assert "email" in response.json()
     assert "review" in response.json()
-
+                
 
 def test_delete_review(api_client, review_user, review_instance):
     response = api_client.delete(f"/api/reviews/{review_instance.id}/")
