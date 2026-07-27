@@ -113,3 +113,41 @@ def test_create_review_with_invalid_data(api_client, review_user):
     assert "game" in response.json()
     assert "email" in response.json()
     assert "review" in response.json()
+
+
+@pytest.mark.django_db
+def test_happy_path_auth_and_review_flow(api_client):
+    auth_user = get_user_model().objects.create_user(
+        username="integrationuser",
+        password="StrongPass123",
+    )
+
+    token_response = api_client.post(
+        "/api/token/",
+        {"username": auth_user.username, "password": "StrongPass123"},
+        format="json",
+    )
+    assert token_response.status_code == status.HTTP_200_OK
+
+    access_token = token_response.json()["access"]
+    api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
+
+    review_user = User.objects.create(
+        username="reviewer",
+        email="reviewer@example.com",
+    )
+    review_payload = {
+        "user": review_user.id,
+        "game": "Hades",
+        "email": "integration@example.com",
+        "review": "Excellent pacing and music.",
+    }
+    create_response = api_client.post("/api/reviews/", review_payload, format="json")
+    assert create_response.status_code == status.HTTP_201_CREATED
+
+    review_id = create_response.json()["id"]
+    get_response = api_client.get(f"/api/reviews/{review_id}/")
+
+    assert get_response.status_code == status.HTTP_200_OK
+    assert get_response.json()["game"] == review_payload["game"]
+    assert get_response.json()["review"] == review_payload["review"]
