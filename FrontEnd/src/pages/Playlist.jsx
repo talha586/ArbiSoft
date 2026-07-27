@@ -1,0 +1,70 @@
+import { useState, useEffect } from 'react';
+import { getGenres, getGames } from '../api/gamesApi';
+
+const Playlist = () => {
+  const [genres, setGenres] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [relatedGames, setRelatedGames] = useState([]);
+
+  useEffect(() => {
+    getGenres().then(setGenres).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedGenre) {
+      setRelatedGames([]);
+      return;
+    }
+    getGames(selectedGenre).then(setRelatedGames).catch(console.error);
+  }, [selectedGenre]);
+
+  const handleGenre = (event) => {
+    setSelectedGenre(event.target.value);
+  };
+
+  return (
+    <div className="Playlist-Container">
+      <div>
+        <h1 className="Title-Container">Search PlayLists</h1>
+      </div>
+
+      <div className="Playlist-Controls">
+        <label htmlFor="Select-Genre" className="Genre-Label">
+          Select A Genre :
+        </label>
+        <select
+          id="Select-Genre"
+          value={selectedGenre}
+          onChange={handleGenre}
+          className="Genre-Select"
+        >
+          <option value="">-- Select Genre --</option>
+          {genres.map((genre, index) => (
+            <option key={index} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {selectedGenre && (
+        <div className="Games-Container">
+          {relatedGames.length > 0 ? (
+            relatedGames.map((game) => (
+              <div key={game.id} className="Game-Details">
+                <img src={game.thumbnail} alt={game.title} />
+                <h3>{game.title}</h3>
+                <p>{game.genre}</p>
+                <p>{game.platform}</p>
+              </div>
+            ))
+          ) : (
+            <p className="Empty-Text">No games found for this genre</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Playlist;
